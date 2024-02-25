@@ -42,11 +42,7 @@ def createTodaysGames(games, df, odds):
             home_team_odds.append(game_odds[home_team]['money_line_odds'])
             away_team_odds.append(game_odds[away_team]['money_line_odds'])
 
-        else:
-            todays_games_uo.append(input(home_team + ' vs ' + away_team + ': '))
 
-            home_team_odds.append(input(home_team + ' odds: '))
-            away_team_odds.append(input(away_team + ' odds: '))
 
         # calculate days rest for both teams
         schedule_df = pd.read_csv('Data/nba-2023-UTC.csv', parse_dates=['Date'], date_format='%d/%m/%Y %H:%M')
@@ -137,3 +133,24 @@ if __name__ == "__main__":
     parser.add_argument('-kc', action='store_true', help='Calculates percentage of bankroll to bet based on model edge')
     args = parser.parse_args()
     main()
+
+"""
+# Create dataset with the latest data for 2023-24 season
+cd src/Process-Data
+python -m Get_Data
+python -m Get_Odds_Data
+python -m Create_Games
+
+# Train models
+cd ../Train-Models
+python -m NN_Model_ML
+python -m NN_Model_UO
+python -m XGBoost_Model_ML
+python -m XGBoost_Model_UO
+
+# git clone https://github.com/kyleskom/NBA-Machine-Learning-Sports-Betting.git
+cd NBA-Machine-Learning-Sports-Betting
+pip install -r requirements.txt
+python main.py -xgb -odds=fanduel
+python main.py -nn -odds=fanduel
+"""
