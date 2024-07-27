@@ -12,7 +12,7 @@ tensorboard = TensorBoard(log_dir='../../Logs/{}'.format(current_time))
 earlyStopping = EarlyStopping(monitor='val_loss', patience=10, verbose=0, mode='min')
 mcp_save = ModelCheckpoint('../../Models/NN_Models/Trained-Model-OU-' + current_time, save_best_only=True, monitor='val_loss', mode='min')
 
-dataset = "dataset_2012-24"
+dataset = "dataset_2023-24"
 con = sqlite3.connect("../../Data/dataset.sqlite")
 data = pd.read_sql_query(f"select * from \"{dataset}\"", con, index_col="index")
 con.close()
@@ -32,7 +32,7 @@ model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.Flatten())
 # model.add(tf.keras.layers.Dense(512, activation=tf.nn.relu6))
 # model.add(tf.keras.layers.Dense(256, activation=tf.nn.relu6))
-model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu6))
+model.add(tf.keras.layers.Dense(512, activation=tf.nn.relu6))
 model.add(tf.keras.layers.Dense(3, activation=tf.nn.softmax))
 
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])

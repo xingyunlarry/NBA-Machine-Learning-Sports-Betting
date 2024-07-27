@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 
-dataset = "dataset_2012-24"
+dataset = "dataset_2023-24"
 con = sqlite3.connect("../../Data/dataset.sqlite")
 data = pd.read_sql_query(f"select * from \"{dataset}\"", con, index_col="index")
 con.close()
@@ -20,7 +20,7 @@ data = data.values
 data = data.astype(float)
 acc_results = []
 
-for x in tqdm(range(100)):
+for x in tqdm(range(20000)):
     x_train, x_test, y_train, y_test = train_test_split(data, OU, test_size=.1)
 
     train = xgb.DMatrix(x_train, label=y_train)
@@ -32,7 +32,7 @@ for x in tqdm(range(100)):
         'objective': 'multi:softprob',
         'num_class': 3
     }
-    epochs = 750
+    epochs = 1000
 
     model = xgb.train(param, train, epochs)
 

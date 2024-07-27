@@ -20,6 +20,9 @@ data_url = 'https://stats.nba.com/stats/leaguedashteamstats?' \
            'Season=2023-24&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&' \
            'StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision='
 
+#data_url = 'https://stats.nba.com/stats/leaguedashteamstats?Conference=&DateFrom=&DateTo=&Division=&GameScope=&GameSegment=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2023-24&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision='
+#https://github.com/swar/nba_api/blob/master/docs/nba_api/stats/endpoints/leaguedashteamstats.md explain the link above
+#https://stats.nba.com/js/data/leaders/00_daily_lineups_20240213.json for https://www.nba.com/players/todays-lineups 
 
 def createTodaysGames(games, df, odds):
     match_data = []
@@ -102,8 +105,21 @@ def main():
     else:
         data = get_todays_games_json(todays_games_url)
         games = create_todays_games(data)
+
     data = get_json_data(data_url)
     df = to_data_frame(data)
+ #   print(df)
+
+#player data
+    #dataPlayer_url='https://stats.nba.com/stats/playercareerstats?LeagueID=&PerMode=Totals&PlayerID=2544'
+    # dataPlayer_url='https://stats.nba.com/stats/playerindex?Active=&AllStar=&College=&Country=&DraftPick=&DraftRound=&DraftYear=&Height=&Historical=&LeagueID=00&Season=2022-23&TeamID=0&Weight='
+    # dataPlayer = get_json_data(dataPlayer_url)
+    # df1 = to_data_frame(dataPlayer)
+    # print(df1)
+
+
+
+
     data, todays_games_uo, frame_ml, home_team_odds, away_team_odds = createTodaysGames(games, df, odds)
     if args.nn:
         print("------------Neural Network Model Predictions-----------")
@@ -147,7 +163,8 @@ python -m NN_Model_ML
 python -m NN_Model_UO
 python -m XGBoost_Model_ML
 python -m XGBoost_Model_UO
-
+cd..
+cd..
 # git clone https://github.com/kyleskom/NBA-Machine-Learning-Sports-Betting.git
 cd NBA-Machine-Learning-Sports-Betting
 pip install -r requirements.txt
